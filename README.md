@@ -1,2 +1,3 @@
-# restaurant-app
-belajar membuat aplikasi restaurant
+# restaurant_app
+
+A new Flutter project.
