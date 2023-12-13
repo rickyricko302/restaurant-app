@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:restaurant_app/config/constant.dart';
-import 'package:restaurant_app/model/restaurant_model.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app/data/constant.dart';
 import 'package:restaurant_app/modules/detailRestaurant/detail_restaurant.dart';
 import 'package:restaurant_app/modules/home/home_page.dart';
+import 'package:restaurant_app/modules/home/providers/restaurant_list_provider.dart';
 import 'package:restaurant_app/modules/splash_screen/splash_screnn_page.dart';
+import 'package:restaurant_app/repositories/restaurant_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,21 +19,27 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Restaurant App",
-      theme: ThemeData(
-          useMaterial3: false,
-          primaryColor: primaryColor,
-          scaffoldBackgroundColor: Colors.white,
-          textTheme: textTheme),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const SplashScreenPage(),
-        HomePage.routeName: (context) => const HomePage(),
-        DetailRestaurant.routeName: (context) => DetailRestaurant(
-              model: ModalRoute.of(context)?.settings.arguments as Restaurant,
-            ),
+    return ChangeNotifierProvider<RestaurantListProvider>(
+      builder: (context, child) {
+        return MaterialApp(
+          title: "Restaurant App",
+          theme: ThemeData(
+              useMaterial3: false,
+              primaryColor: primaryColor,
+              scaffoldBackgroundColor: Colors.white,
+              textTheme: textTheme),
+          initialRoute: '/',
+          routes: {
+            '/': (context) => const SplashScreenPage(),
+            HomePage.routeName: (context) => const HomePage(),
+            DetailRestaurant.routeName: (context) => DetailRestaurant(
+                  id: ModalRoute.of(context)?.settings.arguments as String,
+                ),
+          },
+        );
       },
+      create: (BuildContext context) =>
+          RestaurantListProvider(repository: RestaurantRepositoryImp()),
     );
   }
 }

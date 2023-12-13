@@ -1,18 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/config/constant.dart';
-import 'package:restaurant_app/model/restaurant_model.dart';
+import 'package:restaurant_app/data/constant.dart';
 import 'package:restaurant_app/modules/detailRestaurant/detail_restaurant.dart';
 
+import '../../../data/api_service.dart';
+import '../../../model/restaurant_list_model.dart';
+
 class ItemRestaurant extends StatelessWidget {
-  const ItemRestaurant(
-      {super.key,
-      required this.model,
-      required this.isFavorite,
-      required this.refreshHome});
+  const ItemRestaurant({
+    super.key,
+    required this.model,
+    required this.isFavorite,
+  });
   final Restaurant model;
   final bool isFavorite;
-  final VoidCallback refreshHome;
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +25,7 @@ class ItemRestaurant extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         onTap: () async {
           Navigator.of(context)
-              .pushNamed(DetailRestaurant.routeName, arguments: model)
-              .then((value) {
-            bool? homeMustReload = value as bool?;
-            if (homeMustReload ?? false) {
-              refreshHome();
-            }
-          });
+              .pushNamed(DetailRestaurant.routeName, arguments: model.id);
         },
         child: Padding(
           padding: const EdgeInsets.all(12),
@@ -43,7 +38,7 @@ class ItemRestaurant extends StatelessWidget {
                   child: Hero(
                     tag: model.pictureId,
                     child: CachedNetworkImage(
-                      imageUrl: model.pictureId,
+                      imageUrl: ApiService.imageSmallUrl(id: model.pictureId),
                       width: 100,
                       fit: BoxFit.cover,
                     ),
@@ -54,6 +49,7 @@ class ItemRestaurant extends StatelessWidget {
                 ),
                 Expanded(
                     child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
@@ -116,42 +112,6 @@ class ItemRestaurant extends StatelessWidget {
                     const SizedBox(
                       height: 4,
                     ),
-                    Wrap(
-                      runSpacing: 8,
-                      spacing: 8,
-                      children: [
-                        Chip(
-                            labelPadding: const EdgeInsets.only(right: 8),
-                            backgroundColor: primaryColor.withOpacity(80 / 100),
-                            avatar: Text(model.menus.foods.length.toString(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium
-                                    ?.copyWith(color: Colors.white)),
-                            label: Text(
-                              'Foods',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(color: Colors.white),
-                            )),
-                        Chip(
-                            labelPadding: const EdgeInsets.only(right: 8),
-                            backgroundColor: primaryColor.withOpacity(80 / 100),
-                            avatar: Text(model.menus.drinks.length.toString(),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium
-                                    ?.copyWith(color: Colors.white)),
-                            label: Text(
-                              'Drinks',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(color: Colors.white),
-                            ))
-                      ],
-                    )
                   ],
                 ))
               ],

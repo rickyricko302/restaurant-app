@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/data/api_service.dart';
 
 class DetailRestaurantAppBar extends StatelessWidget {
   const DetailRestaurantAppBar(
@@ -20,7 +21,7 @@ class DetailRestaurantAppBar extends StatelessWidget {
           background: Hero(
             tag: imageUrl,
             child: CachedNetworkImage(
-              imageUrl: imageUrl,
+              imageUrl: ApiService.imageLargeUrl(id: imageUrl),
               fit: BoxFit.cover,
             ),
           ),

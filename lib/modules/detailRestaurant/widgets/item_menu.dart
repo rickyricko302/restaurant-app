@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/utils/snackbar_helper.dart';
 
-import '../../../config/constant.dart';
+import '../../../data/constant.dart';
 
 class ItemMenu extends StatefulWidget {
   const ItemMenu({super.key, required this.title});

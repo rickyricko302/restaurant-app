@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/config/constant.dart';
+import 'package:restaurant_app/data/constant.dart';
 
 class SnackBarHelper {
   /// function to show snackbar with color black

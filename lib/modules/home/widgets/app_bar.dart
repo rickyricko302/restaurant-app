@@ -1,7 +1,7 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
-import '../../../config/constant.dart';
+import '../../../data/constant.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
