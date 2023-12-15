@@ -1,21 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/data/constant.dart';
-import 'package:restaurant_app/modules/detail_restaurant/detail_restaurant.dart';
-import 'package:restaurant_app/modules/home/providers/restaurant_fav_provider.dart';
+import 'package:restaurant_app/data/api_service.dart';
+import 'package:restaurant_app/model/response/restaurant_search_model.dart';
 
-import '../../../data/api_service.dart';
-import '../../../model/restaurant_list_model.dart';
+import '../../../data/constant.dart';
+import '../../detail_restaurant/detail_restaurant.dart';
+import '../../home/providers/restaurant_fav_provider.dart';
 
-class ItemRestaurant extends StatelessWidget {
-  const ItemRestaurant({
-    super.key,
-    required this.model,
-    required this.isFavorite,
-  });
-  final Restaurant model;
-  final bool isFavorite;
+class SearchItem extends StatelessWidget {
+  const SearchItem({super.key, required this.model});
+  final Restaurants model;
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +33,10 @@ class ItemRestaurant extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(6),
                   child: Hero(
-                    tag: model.pictureId,
+                    tag: model.pictureId ?? '-',
                     child: CachedNetworkImage(
-                      imageUrl: ApiService.imageSmallUrl(id: model.pictureId),
+                      imageUrl:
+                          ApiService.imageSmallUrl(id: model.pictureId ?? '-'),
                       width: 100,
                       fit: BoxFit.cover,
                     ),
@@ -58,9 +54,24 @@ class ItemRestaurant extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
-                          child: Text(
-                            model.name,
-                            style: Theme.of(context).textTheme.titleLarge,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                model.name ?? '-',
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
+                              Text(
+                                model.description ?? '-',
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelMedium
+                                    ?.copyWith(color: Colors.grey),
+                              ),
+                            ],
                           ),
                         ),
                         const SizedBox(
@@ -101,7 +112,7 @@ class ItemRestaurant extends StatelessWidget {
                         ),
                         Expanded(
                             child: Text(
-                          model.city,
+                          model.city ?? "-",
                           style: Theme.of(context).textTheme.bodySmall,
                         )),
                         const Icon(

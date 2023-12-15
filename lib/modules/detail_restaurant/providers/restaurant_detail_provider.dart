@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/model/restaurant_detail_model.dart';
 import 'package:restaurant_app/model/status.dart';
-import 'package:restaurant_app/modules/detailRestaurant/detail_restaurant.dart';
+import 'package:restaurant_app/modules/detail_restaurant/detail_restaurant.dart';
 import 'package:restaurant_app/repositories/restaurant_repository.dart';
 import 'package:restaurant_app/utils/local_storage.dart';
 
@@ -54,7 +54,7 @@ class RestaurantDetailProvider extends ChangeNotifier {
       notifyListeners();
     } on SocketException {
       status = Status.error;
-      message = 'Opps jaringan internet mati';
+      message = 'Opps your network is disabled';
       notifyListeners();
     } catch (e) {
       status = Status.error;
@@ -87,7 +87,7 @@ class RestaurantDetailProvider extends ChangeNotifier {
       });
     } on SocketException {
       statusReview = Status.error;
-      message = 'Opps jaringan internet mati';
+      message = 'Opps your network is disabled';
       notifyListeners();
     } catch (e) {
       statusReview = Status.error;

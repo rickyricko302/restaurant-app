@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:restaurant_app/data/api_service.dart';
 import 'package:restaurant_app/model/post/review_model_post.dart';
+import 'package:restaurant_app/model/response/restaurant_search_model.dart';
 import 'package:restaurant_app/model/restaurant_list_model.dart';
 import 'package:restaurant_app/model/restaurant_detail_model.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +11,7 @@ abstract class RestaurantRepository {
   Future<RestaurantListModel> getListRestaurant();
   Future<RestaurantDetailModel> getDetailRestaurant({required String id});
   Future<void> addReviewRestaurant({required ReviewModelPost reviewModel});
+  Future<RestaurantSearchModel> searchRestaurant({required String query});
 }
 
 class RestaurantRepositoryImp implements RestaurantRepository {
@@ -47,5 +49,19 @@ class RestaurantRepositoryImp implements RestaurantRepository {
     if (res.statusCode != 201) {
       throw Exception(res.statusCode);
     }
+  }
+
+  @override
+  Future<RestaurantSearchModel> searchRestaurant(
+      {required String query}) async {
+    var res = await http.get(
+      Uri.parse(ApiService.searchUrl(query: query)),
+    );
+    if (res.statusCode != 200) {
+      throw Exception(res.statusCode);
+    }
+    RestaurantSearchModel model =
+        RestaurantSearchModel.fromJson(jsonDecode(res.body));
+    return model;
   }
 }

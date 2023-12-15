@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/model/restaurant_detail_model.dart';
-import 'package:restaurant_app/modules/detailRestaurant/widgets/item_menu.dart';
+import 'package:restaurant_app/modules/detail_restaurant/widgets/item_menu.dart';
 
 import '../../../data/constant.dart';
 

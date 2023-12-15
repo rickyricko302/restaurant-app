@@ -9,6 +9,7 @@ class RestaurantFavProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// function to add or remove favorite
   void addOrRemoveFavorite({required String idRestaurant}) async {
     await LocalStorage.addOrRemoveFavorite(idRestaurant: idRestaurant);
     listFav.clear();

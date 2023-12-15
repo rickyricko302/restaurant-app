@@ -19,6 +19,7 @@ class RestaurantListProvider extends ChangeNotifier {
     getListRestaurant();
   }
 
+  /// function to get list restaurant
   Future<void> getListRestaurant() async {
     status = Status.loading;
     notifyListeners();
@@ -28,7 +29,7 @@ class RestaurantListProvider extends ChangeNotifier {
       notifyListeners();
     } on SocketException {
       status = Status.error;
-      message = 'Opps jaringan internet mati';
+      message = 'Opps your network is disabled';
       notifyListeners();
       scrollController.animateTo(0,
           duration: const Duration(seconds: 1), curve: Curves.ease);
