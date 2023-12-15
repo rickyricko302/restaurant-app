@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/constant.dart';
 import 'package:restaurant_app/modules/detailRestaurant/detail_restaurant.dart';
 import 'package:restaurant_app/modules/home/home_page.dart';
+import 'package:restaurant_app/modules/home/providers/restaurant_fav_provider.dart';
 import 'package:restaurant_app/modules/home/providers/restaurant_list_provider.dart';
 import 'package:restaurant_app/modules/splash_screen/splash_screnn_page.dart';
 import 'package:restaurant_app/repositories/restaurant_repository.dart';
@@ -19,7 +20,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<RestaurantListProvider>(
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<RestaurantListProvider>(
+            create: (_) => RestaurantListProvider(
+                  repository: RestaurantRepositoryImp(),
+                )),
+        ChangeNotifierProvider<RestaurantFavProvider>(
+            create: (_) => RestaurantFavProvider())
+      ],
       builder: (context, child) {
         return MaterialApp(
           title: "Restaurant App",
@@ -38,8 +47,6 @@ class MainApp extends StatelessWidget {
           },
         );
       },
-      create: (BuildContext context) =>
-          RestaurantListProvider(repository: RestaurantRepositoryImp()),
     );
   }
 }

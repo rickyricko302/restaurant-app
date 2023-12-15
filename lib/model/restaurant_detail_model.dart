@@ -47,9 +47,10 @@ class Restaurant {
     pictureId = json['pictureId'];
     if (json['categories'] != null) {
       categories = <Categories>[];
-      json['categories'].forEach((v) {
-        categories!.add(Categories.fromJson(v));
-      });
+      for (int i = 0; i < json['categories'].length; i++) {
+        categories!.add(Categories.fromJson(json['categories'][i],
+            i < json['categories'].length - 1 ? ', ' : ''));
+      }
     }
     menus = json['menus'] != null ? Menus.fromJson(json['menus']) : null;
     rating = json['rating'].toDouble();
@@ -67,8 +68,8 @@ class Categories {
 
   Categories({this.name});
 
-  Categories.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
+  Categories.fromJson(Map<String, dynamic> json, suffix) {
+    name = json['name'] + suffix;
   }
 
   Map<String, dynamic> toJson() {

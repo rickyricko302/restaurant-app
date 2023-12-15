@@ -8,8 +8,8 @@ class ReviewModelPost {
     required this.review,
   });
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
+  Map<String, dynamic> toJson() {
+    return <String, String>{
       'id': id,
       'name': name,
       'review': review,

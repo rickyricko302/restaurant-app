@@ -3,13 +3,14 @@ import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/constant.dart';
 import 'package:restaurant_app/model/status.dart';
 import 'package:restaurant_app/modules/detailRestaurant/providers/restaurant_detail_provider.dart';
+import 'package:restaurant_app/modules/detailRestaurant/widgets/about_restaurant.dart';
 import 'package:restaurant_app/modules/detailRestaurant/widgets/detail_restaurant_app_bar.dart';
 import 'package:restaurant_app/modules/detailRestaurant/widgets/floating_button_fav.dart';
-import 'package:restaurant_app/modules/detailRestaurant/widgets/item_menu.dart';
 import 'package:restaurant_app/repositories/restaurant_repository.dart';
 import 'package:restaurant_app/shared_widgets/loader.dart';
-
 import '../../shared_widgets/refresh_button.dart';
+import 'widgets/menu_restaurant.dart';
+import 'widgets/review_restaurant.dart';
 
 class DetailRestaurant extends StatelessWidget {
   const DetailRestaurant({super.key, required this.id});
@@ -90,97 +91,16 @@ class DetailRestaurant extends StatelessWidget {
                                 const SizedBox(
                                   height: 30,
                                 ),
-                                Text(
-                                  'About Restaurant',
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                ),
-                                const SizedBox(
-                                  height: 4,
-                                ),
-                                Text(
-                                  value.model?.restaurant?.description ?? '-',
-                                  style: Theme.of(context).textTheme.bodyLarge,
-                                ),
+                                AboutRestaurant(model: value.model),
                                 const SizedBox(
                                   height: 30,
                                 ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Foods Menu',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge,
-                                    ),
-                                    const SizedBox(
-                                      width: 4,
-                                    ),
-                                    const Icon(Icons.dinner_dining_outlined,
-                                        color: secondaryColor)
-                                  ],
-                                ),
-                                Text(
-                                  'press menu to select',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall
-                                      ?.copyWith(color: Colors.grey),
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                Wrap(
-                                  spacing: 8,
-                                  runSpacing: 8,
-                                  children: List.generate(
-                                      value.model?.restaurant?.menus?.foods
-                                              ?.length ??
-                                          0,
-                                      (index) => ItemMenu(
-                                            title: value.model!.restaurant!
-                                                .menus!.foods![index],
-                                          )),
-                                ),
+                                MenuRestaurant(model: value.model),
                                 const SizedBox(
                                   height: 30,
                                 ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      'Drinks Menu',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge,
-                                    ),
-                                    const SizedBox(
-                                      width: 4,
-                                    ),
-                                    const Icon(
-                                      Icons.coffee_outlined,
-                                      color: secondaryColor,
-                                    )
-                                  ],
-                                ),
-                                Text(
-                                  'press menu to select',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleSmall
-                                      ?.copyWith(color: Colors.grey),
-                                ),
-                                const SizedBox(
-                                  height: 12,
-                                ),
-                                Wrap(
-                                  spacing: 8,
-                                  runSpacing: 8,
-                                  children: List.generate(
-                                      value.model?.restaurant?.menus?.drinks
-                                              ?.length ??
-                                          0,
-                                      (index) => ItemMenu(
-                                          title: value.model!.restaurant!.menus!
-                                              .drinks![index])),
+                                ReviewRestaurant(
+                                  provider: value,
                                 ),
                                 const SizedBox(
                                   height: 60,

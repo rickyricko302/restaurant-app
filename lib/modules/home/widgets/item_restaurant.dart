@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/constant.dart';
 import 'package:restaurant_app/modules/detailRestaurant/detail_restaurant.dart';
+import 'package:restaurant_app/modules/home/providers/restaurant_fav_provider.dart';
 
 import '../../../data/api_service.dart';
 import '../../../model/restaurant_list_model.dart';
@@ -64,22 +66,26 @@ class ItemRestaurant extends StatelessWidget {
                         const SizedBox(
                           width: 4,
                         ),
-                        Visibility(
-                          visible: isFavorite,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 4, horizontal: 6),
-                            decoration: BoxDecoration(
-                                color: secondaryColor,
-                                borderRadius: BorderRadius.circular(50)),
-                            child: Text(
-                              'fav',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall
-                                  ?.copyWith(color: Colors.white),
-                            ),
-                          ),
+                        Consumer<RestaurantFavProvider>(
+                          builder: (context, value2, child) {
+                            return Visibility(
+                              visible: value2.listFav.contains(model.id),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 6),
+                                decoration: BoxDecoration(
+                                    color: secondaryColor,
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Text(
+                                  'fav',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelSmall
+                                      ?.copyWith(color: Colors.white),
+                                ),
+                              ),
+                            );
+                          },
                         )
                       ],
                     ),
