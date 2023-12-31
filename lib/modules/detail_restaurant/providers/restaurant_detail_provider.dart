@@ -5,13 +5,11 @@ import 'package:restaurant_app/model/restaurant_detail_model.dart';
 import 'package:restaurant_app/model/status.dart';
 import 'package:restaurant_app/modules/detail_restaurant/detail_restaurant.dart';
 import 'package:restaurant_app/repositories/restaurant_repository.dart';
-import 'package:restaurant_app/utils/local_storage.dart';
 
 import '../../../model/post/review_model_post.dart';
 import '../../../utils/snackbar_helper.dart';
 
 class RestaurantDetailProvider extends ChangeNotifier {
-  bool isFavorite = false;
   final String id;
   String message = '';
   bool isCollapsed = false;
@@ -34,7 +32,6 @@ class RestaurantDetailProvider extends ChangeNotifier {
         setCollapsed(value: false);
       }
     });
-    isFavorite = LocalStorage.isFavorite(idRestaurant: id);
     getDetailRestaurant();
   }
 

@@ -80,7 +80,7 @@ class SearchItem extends StatelessWidget {
                         Consumer<RestaurantFavProvider>(
                           builder: (context, value2, child) {
                             return Visibility(
-                              visible: value2.listFav.contains(model.id),
+                              visible: value2.checkIsFav(id: model.id ?? ""),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 4, horizontal: 6),

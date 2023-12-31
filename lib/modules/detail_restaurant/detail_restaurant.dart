@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/data/constant.dart';
+import 'package:restaurant_app/model/restaurant_database_model.dart';
 import 'package:restaurant_app/model/status.dart';
 import 'package:restaurant_app/modules/detail_restaurant/providers/restaurant_detail_provider.dart';
 import 'package:restaurant_app/modules/detail_restaurant/widgets/about_restaurant.dart';
@@ -11,6 +12,7 @@ import 'package:restaurant_app/shared_widgets/loader.dart';
 import '../../shared_widgets/refresh_button.dart';
 import 'widgets/menu_restaurant.dart';
 import 'widgets/review_restaurant.dart';
+import 'package:http/http.dart' as http;
 
 class DetailRestaurant extends StatelessWidget {
   const DetailRestaurant({super.key, required this.id});
@@ -21,7 +23,7 @@ class DetailRestaurant extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<RestaurantDetailProvider>(
       create: (context) => RestaurantDetailProvider(
-          id: id, repository: RestaurantRepositoryImp()),
+          id: id, repository: RestaurantRepositoryImp(client: http.Client())),
       builder: (context, child) {
         return Scaffold(
             appBar: AppBar(
@@ -125,8 +127,13 @@ class DetailRestaurant extends StatelessWidget {
                   duration: const Duration(seconds: 1),
                   child: value.status == Status.success
                       ? FloatingButtonFav(
-                          id: id,
-                          name: value.model?.restaurant?.name ?? '-',
+                          model: RestaurantDatabaseModel(
+                            idRestaurant: id,
+                            name: value.model?.restaurant?.name ?? '-',
+                            place: value.model?.restaurant?.city ?? '-',
+                            pictureId: value.model?.restaurant?.pictureId ?? '',
+                            rating: value.model?.restaurant?.rating ?? 0,
+                          ),
                         )
                       : const SizedBox());
             }));

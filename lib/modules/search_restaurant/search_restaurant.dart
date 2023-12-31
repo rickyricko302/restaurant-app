@@ -40,7 +40,7 @@ class SearchRestaurantPage extends StatelessWidget {
                               listen: false)
                           .searchController,
                       decoration: InputDecoration(
-                          hintText: "Search restaurant",
+                          hintText: "Search restaurant or menu",
                           filled: true,
                           fillColor: Colors.grey[200],
                           focusedBorder: OutlineInputBorder(

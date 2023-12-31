@@ -15,9 +15,11 @@ abstract class RestaurantRepository {
 }
 
 class RestaurantRepositoryImp implements RestaurantRepository {
+  final http.Client client;
+  RestaurantRepositoryImp({required this.client});
   @override
   Future<RestaurantListModel> getListRestaurant() async {
-    var res = await http.get(Uri.parse(ApiService.listUrl));
+    var res = await client.get(Uri.parse(ApiService.listUrl));
     if (res.statusCode != 200) {
       throw Exception(res.statusCode);
     }
@@ -29,7 +31,7 @@ class RestaurantRepositoryImp implements RestaurantRepository {
   @override
   Future<RestaurantDetailModel> getDetailRestaurant(
       {required String id}) async {
-    var res = await http.get(
+    var res = await client.get(
       Uri.parse(ApiService.detailUrl(id: id)),
     );
     if (res.statusCode != 200) {
@@ -43,7 +45,7 @@ class RestaurantRepositoryImp implements RestaurantRepository {
   @override
   Future<void> addReviewRestaurant(
       {required ReviewModelPost reviewModel}) async {
-    var res = await http.post(Uri.parse(ApiService.addReviewUrl),
+    var res = await client.post(Uri.parse(ApiService.addReviewUrl),
         body: reviewModel.toJson(), headers: {'accept': 'application/json'});
 
     if (res.statusCode != 201) {
@@ -54,7 +56,7 @@ class RestaurantRepositoryImp implements RestaurantRepository {
   @override
   Future<RestaurantSearchModel> searchRestaurant(
       {required String query}) async {
-    var res = await http.get(
+    var res = await client.get(
       Uri.parse(ApiService.searchUrl(query: query)),
     );
     if (res.statusCode != 200) {
